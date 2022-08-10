@@ -12,6 +12,10 @@ const api = async (search, page) => {
   });
   const { data } = await axios.get(`https://pixabay.com/api/?${searchParams}`);
 
+  if (data.totalHits === 0) {
+    throw new Error('No results');
+  }
+
   return data;
 };
 export default api;

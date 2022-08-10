@@ -5,26 +5,27 @@ import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
   state = {
-    value: '',
+    queri: '',
   };
   handelChange = e => {
-    const { value } = e.target;
-    this.setState({ value });
+    const value = e.target.value;
+    this.setState({ queri: value });
   };
 
   handelSubmit = e => {
     e.preventDefault();
     const { handelSearch } = this.props;
-    const { value } = this.state;
-    if (value.trim() === '') {
-      Notify.failure('Введіть запит');
+    const { queri } = this.state;
+    if (queri.trim() === '') {
+      Notify.failure('Empty request');
       return;
     }
 
-    handelSearch(value);
+    handelSearch(queri);
   };
 
   render() {
+    const { queri } = this.state;
     return (
       <header className={s.searchbar}>
         <form onSubmit={this.handelSubmit} className={s.form}>
@@ -36,7 +37,7 @@ class Searchbar extends Component {
             onChange={this.handelChange}
             className={s.input}
             type="text"
-            name="search"
+            value={queri}
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
